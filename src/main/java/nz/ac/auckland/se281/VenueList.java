@@ -36,7 +36,7 @@ public class VenueList {
 
     // Venue Code must be unique
     for (Venue i : venueList) {
-      if (venueCode == i.code) {
+      if(i.code.equals(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.name);
         return;
       }
