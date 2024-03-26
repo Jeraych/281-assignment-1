@@ -111,6 +111,23 @@ public class VenueList {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
     }
+
+    // Print 2 - 9 venues
+    if (n >= 2 && n <= 9) {
+      for (Venue venue : venueList) {
+        MessageCli.NUMBER_VENUES.printMessage("are", "two", "s");
+        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+      }
+    }
+
+    // Print 10+ venues
+    if (n >= 10) {
+      String number = String.valueOf(n);
+      for (Venue venue : venueList) {
+        MessageCli.NUMBER_VENUES.printMessage("are", number, "s");
+        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+      }
+    }
   }
 
 
