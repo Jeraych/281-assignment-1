@@ -50,6 +50,14 @@ public class MainTest {
     }
 
     @Test
+    public void T1_03_01_invalid_venue_empty_name_with_space() throws Exception {
+      runCommands(CREATE_VENUE, "' '", "NA", "80", "150");
+
+      assertContains("Venue not created: venue name must not be empty.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
     public void T1_04_invalid_capacity_negative() throws Exception {
       runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "-1", "150");
 
@@ -58,8 +66,72 @@ public class MainTest {
     }
 
     @Test
+    public void T1_04_01_invalid_capacity_not_number() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "'not a number'", "150");
+
+      assertContains("Venue not created: capacity must be a number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_04_02_invalid_capacity_zero() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "0", "150");
+
+      assertContains("Venue not created: capacity must be a positive number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_04_03_invalid_capacity_decimal() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "1.50", "150");
+
+      assertContains("Venue not created: capacity must be a number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_04_04_invalid_capacity_double() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "1.00", "150");
+
+      assertContains("Venue not created: capacity must be a number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
     public void T1_05_invalid_base_hire_fee_not_number() throws Exception {
       runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "fifty");
+
+      assertContains("Venue not created: hire fee must be a number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_05_01_invalid_base_hire_fee_negative() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "-50");
+
+      assertContains("Venue not created: hire fee must be a positive number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_05_02_invalid_base_hire_fee_zero() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "0");
+
+      assertContains("Venue not created: hire fee must be a positive number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_05_03_invalid_base_hire_fee_decimal() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "0.50");
+
+      assertContains("Venue not created: hire fee must be a number.");
+      assertDoesNotContain("Successfully created venue", true);
+    }
+
+    @Test
+    public void T1_05_04_invalid_base_hire_fee_double() throws Exception {
+      runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "80", "2.00");
 
       assertContains("Venue not created: hire fee must be a number.");
       assertDoesNotContain("Successfully created venue", true);
@@ -78,6 +150,35 @@ public class MainTest {
       assertContains("There is one venue in the system:");
       assertContains("Successfully created venue 'Frugal Fiesta Hall' (FFH).");
       assertDoesNotContain("Please create a venue first", true);
+    }
+
+    @Test
+    public void T1_06_01_nine_venues_saved() throws Exception {
+      runCommands(unpack(CREATE_NINE_VENUES, PRINT_VENUES));
+
+      assertContains("Successfully created venue 'Frugal Fiesta Hall' (FFH).");
+      assertContains("Successfully created venue 'Comfy Corner Events Centre' (CCEC).");
+      assertContains("Successfully created venue 'Cozy Comforts Venue' (CCV).");
+      assertContains("Successfully created venue 'Charming Charm Hall' (CCH).");
+      assertContains("Successfully created venue 'Refined Radiance Venue' (RRV).");
+      assertContains("Successfully created venue 'Classy Celebration Venue' (TGB).");
+      assertContains("Successfully created venue 'Grand Gala Gardens' (GGG).");
+      assertContains("Successfully created venue 'Exclusive Elegance Venue' (EEV).");
+      assertContains("Successfully created venue 'Luxurious Legacy Hall' (LLH).");
+
+      assertContains("There are nine venues in the system:");
+      assertContains("Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee");
+      assertContains("Comfy Corner Events Centre (CCEC) - 120 people - $500 base hire fee");
+      assertContains("Cozy Comforts Venue (CCV) - 200 people - $500 base hire fee");
+      assertContains("Charming Charm Hall (CCH) - 220 people - $500 base hire fee");
+      assertContains("Refined Radiance Venue (RRV) - 200 people - $500 base hire fee");
+      assertContains("Classy Celebration Venue (TGB) - 150 people - $1000 base hire fee");
+      assertContains("Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee");
+      assertContains("Exclusive Elegance Venue (EEV) - 350 people - $1500 base hire fee");
+      assertContains("Luxurious Legacy Hall (LLH) - 800 people - $2500 base hire fee");
+
+      assertDoesNotContain("There is", true);
+      assertDoesNotContain("9 venues", true);
     }
 
     @Test

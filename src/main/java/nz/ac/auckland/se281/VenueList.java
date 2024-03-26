@@ -29,7 +29,7 @@ public class VenueList {
   public void addVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     
     // Venue Name cannot be empty
-    if (venueName.isEmpty()) {
+    if (venueName.trim().isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
     }
@@ -43,45 +43,32 @@ public class VenueList {
     }
 
     // Venue Capacity must be a number
-    for (int i = 1; i < capacityInput.length(); i++) {
-      if (!Character.isDigit(capacityInput.charAt(i))) {
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
-        return;
-      }
+    int capacity = 0;
+    try {
+      capacity = Integer.parseInt(capacityInput);
+    } catch (Exception e) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
+      return;
     }
 
     // Venue Capacity must be a positive number
-    int capacity = Integer.parseInt(capacityInput);
-    if (capacity < 0) {
+    if (capacity <= 0) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
       return;
     }
 
-    // Venue Capacity must be over zero
-    if (capacity == 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " over zero");
-      return;
-    }
-
-
     // Venue Hire Fee must be a number
-    for (int i = 1; i < hireFeeInput.length(); i++) {
-      if (!Character.isDigit(hireFeeInput.charAt(i))) {
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
-        return;
-      }
+    int hireFee = 0;
+    try {
+      hireFee = Integer.parseInt(hireFeeInput);
+    } catch (Exception e) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
+      return;
     }
 
     // Venue Hire Fee must be a positive number
-    int hireFee = Integer.parseInt(hireFeeInput);
-    if (hireFee < 0) {
+    if (hireFee <= 0) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
-      return;
-    }
-
-    // Venue Hire Fee must be over zero
-    if (hireFee == 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " over zero");
       return;
     }
 
@@ -89,6 +76,7 @@ public class VenueList {
     Venue venue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
     this.venueList.add(venue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venue.name, venue.code);
+    return;
   }
 
   public void displayVenues() {
@@ -110,24 +98,60 @@ public class VenueList {
       Venue venue = venueList.get(0);
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+      return;
     }
 
     // Print 2 - 9 venues
     if (n >= 2 && n <= 9) {
+      String word = "";
+      switch(n) {
+        case 1: 
+        word = "one";
+        break;
+        case 2: 
+        word = "two";
+        break;
+        case 3: 
+        word = "three";
+        break;
+        case 4: 
+        word = "four";
+        case 5:
+        word = "five";
+        break;
+        case 6:
+        word = "six";
+        break;
+        case 7:
+        word = "seven";
+        break;
+        case 8:
+        word = "eight";
+        break;
+        case 9:
+        word = "nine";
+        break;
+      }
+      MessageCli.NUMBER_VENUES.printMessage("are", word, "s");
       for (Venue venue : venueList) {
-        MessageCli.NUMBER_VENUES.printMessage("are", "two", "s");
         MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
       }
+      return;
     }
 
     // Print 10+ venues
     if (n >= 10) {
       String number = String.valueOf(n);
+      MessageCli.NUMBER_VENUES.printMessage("are", number, "s");
       for (Venue venue : venueList) {
-        MessageCli.NUMBER_VENUES.printMessage("are", number, "s");
         MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
       }
+      return;
     }
+
+    
+
+    
   }
 
 
