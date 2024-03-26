@@ -9,12 +9,11 @@ public class VenueList {
   class Venue {
     private String name;
     private String code;
-    private int capacity;
-    private int hireFee;
+    private String capacity;
+    private String hireFee;
 
-    public Venue(String venueName, String venueCode, int venueCapacity, int venueHireFee) {
+    public Venue(String venueName, String venueCode, String venueCapacity, String venueHireFee) {
       
-
       this.name = venueName;
       this.code = venueCode;
       this.capacity = venueCapacity;
@@ -46,7 +45,7 @@ public class VenueList {
     // Venue Capacity must be a number
     for (int i = 1; i < capacityInput.length(); i++) {
       if (!Character.isDigit(capacityInput.charAt(i))) {
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " ");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
         return;
       }
     }
@@ -68,7 +67,7 @@ public class VenueList {
     // Venue Hire Fee must be a number
     for (int i = 1; i < hireFeeInput.length(); i++) {
       if (!Character.isDigit(hireFeeInput.charAt(i))) {
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " ");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
         return;
       }
     }
@@ -87,10 +86,33 @@ public class VenueList {
     }
 
     // create venue
-    Venue venue = new Venue(venueName, venueCode, capacity, hireFee);
+    Venue venue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
     this.venueList.add(venue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venue.name, venue.code);
   }
 
-  
+  public void displayVenues() {
+
+    // Print no venue
+    if (venueList.isEmpty()) {
+      MessageCli.NO_VENUES.printMessage();
+      return;
+    }
+
+    // Detect number of venues in the list
+    int n = 0;
+    for (Venue i : venueList) {
+      n++;
+    }
+
+    // Print one venue
+    if (n == 1) {
+      Venue venue = venueList.get(0);
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+      MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+    }
+  }
+
+
+
 }

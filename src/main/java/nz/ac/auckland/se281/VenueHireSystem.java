@@ -13,8 +13,8 @@ public class VenueHireSystem {
 
   public void printVenues() {
     // TODO implement this method
-    
-    MessageCli.NO_VENUES.printMessage();
+    venues.displayVenues();
+
   }
 
   public void createVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
