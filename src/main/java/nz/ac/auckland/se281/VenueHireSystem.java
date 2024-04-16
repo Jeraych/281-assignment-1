@@ -31,6 +31,11 @@ public class VenueHireSystem {
 
   public void printSystemDate() {
     // TODO implement this method
+    if (date == null) {
+      System.out.println("Current system date is not set.");
+    } else {
+      System.out.println("Current system date is " + date + ".");
+    }
   }
 
   public void makeBooking(String[] options) {
