@@ -1,10 +1,13 @@
 package nz.ac.auckland.se281;
+import java.sql.Date;
+
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
   VenueList venues = new VenueList();
+  String date;
 
   public VenueHireSystem() {}
 
@@ -22,6 +25,8 @@ public class VenueHireSystem {
 
   public void setSystemDate(String dateInput) {
     // TODO implement this method
+    date = dateInput;
+    System.out.println("System date set to " + date + ".");
   }
 
   public void printSystemDate() {
