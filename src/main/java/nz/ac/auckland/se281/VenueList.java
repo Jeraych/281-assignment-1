@@ -21,8 +21,6 @@ public class VenueList {
 
     }
 
-
-
 }
 
   // Add new venue to the list
@@ -148,12 +146,15 @@ public class VenueList {
       }
       return;
     }
-
-    
-
-    
   }
 
+  public boolean venueEmpty() {
+    if(venueList.isEmpty()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
 }

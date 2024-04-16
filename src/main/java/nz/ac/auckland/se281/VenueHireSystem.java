@@ -40,6 +40,16 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
     // TODO implement this method
+    
+    // no system date
+    if (date == null) {
+      System.out.println("Booking not made: system date not set. Set the date first.");
+    }
+
+    // no venue
+    if (venues.venueEmpty()) {
+      System.out.println("Booking not made: there are no venues in the system. Create one first.");
+    }
   }
 
   public void printBookings(String venueCode) {
