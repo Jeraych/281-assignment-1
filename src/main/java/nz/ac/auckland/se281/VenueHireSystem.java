@@ -26,15 +26,15 @@ public class VenueHireSystem {
   public void setSystemDate(String dateInput) {
     // TODO implement this method
     date = dateInput;
-    System.out.println("System date set to " + date + ".");
+    MessageCli.DATE_SET.printMessage(date);
   }
 
   public void printSystemDate() {
     // TODO implement this method
     if (date == null) {
-      System.out.println("Current system date is not set.");
+      MessageCli.CURRENT_DATE.printMessage("not set");
     } else {
-      System.out.println("Current system date is " + date + ".");
+      MessageCli.CURRENT_DATE.printMessage(date);
     }
   }
 
@@ -43,13 +43,15 @@ public class VenueHireSystem {
     
     // no system date
     if (date == null) {
-      System.out.println("Booking not made: system date not set. Set the date first.");
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
     }
 
     // no venue
     if (venues.venueEmpty()) {
-      System.out.println("Booking not made: there are no venues in the system. Create one first.");
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
     }
+
+    venues.bookVenue(options);
   }
 
   public void printBookings(String venueCode) {

@@ -6,22 +6,7 @@ public class VenueList {
 
   private ArrayList<Venue> venueList = new ArrayList<Venue>();
 
-  class Venue {
-    private String name;
-    private String code;
-    private String capacity;
-    private String hireFee;
-
-    public Venue(String venueName, String venueCode, String venueCapacity, String venueHireFee) {
-      
-      this.name = venueName;
-      this.code = venueCode;
-      this.capacity = venueCapacity;
-      this.hireFee = venueHireFee;
-
-    }
-
-}
+  
 
   // Add new venue to the list
   public void addVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
@@ -156,5 +141,15 @@ public class VenueList {
     }
   }
 
-
+  public void bookVenue(String[] options) {
+    
+    Booking plan = new Booking(options);
+    
+    for (Venue i : venueList) {
+      if (plan.bCode == i.code) {
+        i.addBooking(plan);
+      }
+    }
+    
+  }
 }
