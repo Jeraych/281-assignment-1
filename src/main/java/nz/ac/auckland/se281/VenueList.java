@@ -145,11 +145,26 @@ public class VenueList {
     
     Booking plan = new Booking(options);
     
-    for (Venue i : venueList) {
-      if (plan.bCode == i.code) {
-        i.addBooking(plan);
+    for (Venue venue : venueList) {
+      if (plan.bCode.equals(venue.code)) {
+
+        // check for duplicates
+        for (Booking i : venue.bookedDate) {
+          if (i.bDate.equals(plan.bDate)) {
+            MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venue.name, i.bDate);
+            return;
+          }
+        }
+
+        // add booking
+        venue.addBooking(plan);
+        return;
       }
     }
+
+    // Can not find venue
+    MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(plan.bCode);
+    return;
     
   }
 }

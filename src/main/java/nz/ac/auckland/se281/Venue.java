@@ -20,9 +20,10 @@ public class Venue {
 
     }
 
-   public void addBooking(Booking plan) {
-    this.bookedDate.add(plan);
-   }
+    public void addBooking(Booking plan) {
+      this.bookedDate.add(plan);
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(BookingReferenceGenerator.generateBookingReference(), this.name, plan.bDate, plan.bAttendees);
+    }
 
 
 }
