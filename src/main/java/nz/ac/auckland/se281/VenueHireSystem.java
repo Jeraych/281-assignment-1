@@ -40,18 +40,44 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
     // TODO implement this method
-    
+
     // no system date
     if (date == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    }
+
+    String dateParts[] = date.split("/");
+
+    int day = Integer.parseInt(dateParts[0]);
+    int month = Integer.parseInt(dateParts[1]);
+    int year = Integer.parseInt(dateParts[2]);
+
+    // using booking class
+    Booking plan = new Booking(options);
+
+    // past date
+    if (year > plan.getYear()) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
+      return;
+    }
+    if (month > plan.getMonth()) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
+      return;
+    }
+    if (day > plan.getDay()) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
+      return;
     }
 
     // no venue
     if (venues.venueEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
     }
 
-    venues.bookVenue(options);
+    // make booking
+    venues.bookVenue(plan);
   }
 
   public void printBookings(String venueCode) {

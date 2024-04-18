@@ -141,9 +141,7 @@ public class VenueList {
     }
   }
 
-  public void bookVenue(String[] options) {
-    
-    Booking plan = new Booking(options);
+  public void bookVenue(Booking plan) {
     
     for (Venue venue : venueList) {
       if (plan.bCode.equals(venue.code)) {

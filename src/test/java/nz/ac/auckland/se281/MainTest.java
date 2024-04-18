@@ -348,6 +348,20 @@ public class MainTest {
     }
 
     @Test
+    public void T2_08_01_make_booking_for_past_year() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "03/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "03/02/2023", "client001@email.com", "230")));
+
+      assertContains("Booking not made: '03/02/2023' is in the past (system date is 03/02/2024).");
+      assertDoesNotContain("Successfully created booking 'HUD14D8O'", true);
+    }
+
+    @Test
     public void T2_09_make_booking_too_few_attendees() throws Exception {
       runCommands(
           unpack(
