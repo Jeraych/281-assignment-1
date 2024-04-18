@@ -363,6 +363,21 @@ public class MainTest {
     }
 
     @Test
+    public void T2_09_01_make_booking_too_many_attendees() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "28/05/2024", "client999@email.com", "270")));
+
+      assertContains("Number of attendees adjusted from 270 to 260, as the venue capacity is 260.");
+      assertContains("Successfully created booking 'HUD14D8O'");
+      assertDoesNotContain("Booking not made", true);
+    }
+
+    @Test
     public void T2_10_booking_next_available_date() throws Exception {
       runCommands(
           unpack(

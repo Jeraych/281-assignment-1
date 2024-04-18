@@ -164,6 +164,14 @@ public class VenueList {
           plan.bAttendees = value;
         }
 
+        // too many attendees
+        int max = venue.getCapacity();
+        value = String.valueOf(max);
+        if (plan.getAttendees() > max) {
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(plan.bAttendees, value, venue.capacity);
+          plan.bAttendees = value;
+        }
+
         // add booking
         venue.addBooking(plan);
         return;
