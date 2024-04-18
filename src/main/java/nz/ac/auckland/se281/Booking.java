@@ -18,4 +18,9 @@ public class Booking {
     this.bEmail = email;
     this.bAttendees = attendees;
   }
-}
+
+  public int getAttendees() {
+    int attend = Integer.parseInt(this.bAttendees);
+    return attend;
+  }
+ }

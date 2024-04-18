@@ -156,6 +156,14 @@ public class VenueList {
           }
         }
 
+        // too few attendees
+        int min = venue.getCapacity() / 4;
+        String value = String.valueOf(min);
+        if (plan.getAttendees() < min) {
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(plan.bAttendees, value, venue.capacity);
+          plan.bAttendees = value;
+        }
+
         // add booking
         venue.addBooking(plan);
         return;

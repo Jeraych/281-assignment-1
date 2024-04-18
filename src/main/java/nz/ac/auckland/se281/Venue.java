@@ -25,5 +25,15 @@ public class Venue {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(BookingReferenceGenerator.generateBookingReference(), this.name, plan.bDate, plan.bAttendees);
     }
 
+    public int getCapacity() {
+      int cap = Integer.parseInt(this.capacity);
+      return cap;
+    }
+
+    public int getHireFee()  {
+      int fee = Integer.parseInt(this.hireFee);
+      return fee;
+    }
+
 
 }
