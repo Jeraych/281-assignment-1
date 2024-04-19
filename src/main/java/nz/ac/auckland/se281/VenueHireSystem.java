@@ -7,13 +7,18 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
 
   VenueList venues = new VenueList();
-  String date;
+  String date = "";
+
+  String[] dateParts;
+  int day;
+  int month;
+  int year;
 
   public VenueHireSystem() {}
 
   public void printVenues() {
     // TODO implement this method
-    venues.displayVenues();
+    venues.displayVenues(date);
 
   }
 
@@ -27,11 +32,16 @@ public class VenueHireSystem {
     // TODO implement this method
     date = dateInput;
     MessageCli.DATE_SET.printMessage(date);
+    dateParts = date.split("/");
+
+    day = Integer.parseInt(dateParts[0]);
+    month = Integer.parseInt(dateParts[1]);
+    year = Integer.parseInt(dateParts[2]);
   }
 
   public void printSystemDate() {
     // TODO implement this method
-    if (date == null) {
+    if (date.trim().isEmpty()) {
       MessageCli.CURRENT_DATE.printMessage("not set");
     } else {
       MessageCli.CURRENT_DATE.printMessage(date);
@@ -42,16 +52,10 @@ public class VenueHireSystem {
     // TODO implement this method
 
     // no system date
-    if (date == null) {
+    if (date.trim().isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }
-
-    String dateParts[] = date.split("/");
-
-    int day = Integer.parseInt(dateParts[0]);
-    int month = Integer.parseInt(dateParts[1]);
-    int year = Integer.parseInt(dateParts[2]);
 
     // using booking class
     Booking plan = new Booking(options);

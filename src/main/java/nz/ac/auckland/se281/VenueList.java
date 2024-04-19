@@ -62,7 +62,7 @@ public class VenueList {
     return;
   }
 
-  public void displayVenues() {
+  public void displayVenues(String today) {
 
     // Print no venue
     if (venueList.isEmpty()) {
@@ -80,7 +80,7 @@ public class VenueList {
     if (n == 1) {
       Venue venue = venueList.get(0);
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+      MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
       return;
     }
 
@@ -117,7 +117,7 @@ public class VenueList {
       }
       MessageCli.NUMBER_VENUES.printMessage("are", word, "s");
       for (Venue venue : venueList) {
-        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
       }
       return;
     }
@@ -127,7 +127,7 @@ public class VenueList {
       String number = String.valueOf(n);
       MessageCli.NUMBER_VENUES.printMessage("are", number, "s");
       for (Venue venue : venueList) {
-        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee);
+        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
       }
       return;
     }

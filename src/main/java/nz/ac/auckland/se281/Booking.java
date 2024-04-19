@@ -16,7 +16,7 @@ public class Booking {
     String email = options[2];
     String attendees = options[3];
 
-    String dateParts[] = date.split("/");
+    String[] dateParts = date.split("/");
 
     this.day = dateParts[0];
     this.month = dateParts[1];
