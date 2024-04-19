@@ -171,6 +171,7 @@ public class VenueList {
         }
 
         // add booking
+        plan.ref = BookingReferenceGenerator.generateBookingReference();
         venue.addBooking(plan);
         return;
       }
@@ -180,5 +181,30 @@ public class VenueList {
     MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(plan.bCode);
     return;
     
+  }
+
+  public Venue getVenue(String code) {
+    Venue a = new Venue(code, code, code, code);
+    for (Venue i : venueList) {
+      if (i.code.equals(code)) {
+        return i;
+      }
+    }
+    return a;
+  }
+
+  public boolean venueExist(String code) {
+
+    if (venueList.isEmpty()) {
+      return false;
+    }
+
+    for (Venue i : venueList) {
+      if (i.code.equals(code)) {
+        return true;
+      }
+    }
+    
+    return false;
   }
 }

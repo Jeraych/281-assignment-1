@@ -8,6 +8,7 @@ public class Booking {
   String day;
   String month;
   String year;
+  String ref;
 
   public Booking(String[] options) {
     

@@ -532,7 +532,7 @@ public class MainTest {
     }
 
     @Test
-    public void T2_11_03_booking_next_available_date_after_making_past_month_bookings() throws Exception {
+    public void T2_11_03_booking_next_available_date_after_making_over_month_bookings() throws Exception {
       runCommands(
           unpack(
             CREATE_TEN_VENUES, //
@@ -554,6 +554,55 @@ public class MainTest {
       assertContains(
           "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
               + " 30/03/2024");
+    }
+
+    @Test
+    public void T2_11_04_booking_next_available_date_after_making_past_month_bookings() throws Exception {
+      runCommands(
+          unpack(
+            CREATE_TEN_VENUES, //
+            SET_DATE,
+            "30/03/2024", //
+            MAKE_BOOKING,
+            options("GGG", "29/03/2024", "client001@email.com", "230"),
+            MAKE_BOOKING,
+            options("GGG", "28/03/2024", "client001@email.com", "230"),
+            PRINT_VENUES));
+              
+
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 30/03/2024");
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 30/03/2024");
+      assertContains(
+          "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
+              + " 30/03/2024");
+    }
+
+    @Test
+    public void T2_11_05_booking_next_available_date_after_making_changing_date() throws Exception {
+      runCommands(
+          unpack(
+            CREATE_TEN_VENUES, //
+            SET_DATE,
+            "01/02/2024", //
+            MAKE_BOOKING,
+            options("GGG", "01/02/2024", "client001@email.com", "230"),
+            PRINT_VENUES,
+            SET_DATE,
+            "30/03/2024", //
+            MAKE_BOOKING,
+            options("GGG", "30/03/2024", "client001@email.com", "230"),
+            PRINT_VENUES
+            ));
+              
+
+      assertContains(
+        "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+            + " 31/03/2024");
+
     }
 
     @Test

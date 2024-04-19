@@ -22,7 +22,7 @@ public class Venue {
 
     public void addBooking(Booking plan) {
       this.bookedDate.add(plan);
-      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(BookingReferenceGenerator.generateBookingReference(), this.name, plan.bDate, plan.bAttendees);
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(plan.ref, this.name, plan.bDate, plan.bAttendees);
     }
 
     public int getCapacity() {
@@ -82,5 +82,9 @@ public class Venue {
       }
 
       return sDay + "/" + sMonth + "/" + Integer.toString(year);
+    }
+
+    public void printBooking(String code) {
+      
     }
 }

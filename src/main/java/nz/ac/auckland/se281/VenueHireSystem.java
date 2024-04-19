@@ -86,6 +86,26 @@ public class VenueHireSystem {
 
   public void printBookings(String venueCode) {
     // TODO implement this method
+
+    // no venue exist
+    if (!venues.venueExist(venueCode)) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
+    }
+
+    // print booking
+    Venue i = venues.getVenue(venueCode);
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(i.name);
+
+    // not booked
+    if (i.bookedDate.isEmpty()) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(i.name);
+      return;
+    }
+
+    for (Booking j : i.bookedDate) {
+      MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(j.ref, j.bDate);
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
