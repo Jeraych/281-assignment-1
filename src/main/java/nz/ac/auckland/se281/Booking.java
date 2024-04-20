@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
+import java.util.ArrayList;
 
 public class Booking {
+
   String bCode;
   String bDate;
   String bEmail;
@@ -9,6 +11,10 @@ public class Booking {
   String month;
   String year;
   String ref;
+
+  ArrayList<Service> services = new ArrayList<Service>();
+
+  public Booking() {}
 
   public Booking(String[] options) {
     
@@ -46,6 +52,10 @@ public class Booking {
   public int getYear() {
     int year = Integer.parseInt(this.year);
     return year;
+  }
+
+  public void addService(Service service) {
+    services.add(service);
   }
 
  }

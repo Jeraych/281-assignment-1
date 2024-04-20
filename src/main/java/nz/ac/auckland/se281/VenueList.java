@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class VenueList {
 
   private ArrayList<Venue> venueList = new ArrayList<Venue>();
-
-  
+  BookingList totalBookings = new BookingList();
 
   // Add new venue to the list
   public void addVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
@@ -173,6 +172,7 @@ public class VenueList {
         // add booking
         plan.ref = BookingReferenceGenerator.generateBookingReference();
         venue.addBooking(plan);
+        totalBookings.addBookingList(plan);
         return;
       }
     }
@@ -184,13 +184,13 @@ public class VenueList {
   }
 
   public Venue getVenue(String code) {
-    Venue a = new Venue(code, code, code, code);
+    Venue error = new Venue();
     for (Venue i : venueList) {
       if (i.code.equals(code)) {
         return i;
       }
     }
-    return a;
+    return error;
   }
 
   public boolean venueExist(String code) {

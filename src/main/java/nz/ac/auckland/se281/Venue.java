@@ -11,6 +11,8 @@ public class Venue {
 
     ArrayList<Booking> bookedDate = new ArrayList<Booking>();
 
+    public Venue() {}
+
     public Venue(String venueName, String venueCode, String venueCapacity, String venueHireFee) {
       
       this.name = venueName;
@@ -84,7 +86,4 @@ public class Venue {
       return sDay + "/" + sMonth + "/" + Integer.toString(year);
     }
 
-    public void printBooking(String code) {
-      
-    }
 }
