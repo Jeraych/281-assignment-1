@@ -112,7 +112,12 @@ public class VenueHireSystem {
     // TODO implement this method
 
     if (venues.totalBookings.bookingExist(bookingReference)) {
-      venues.totalBookings.getBooking(bookingReference);
+      Booking booking = venues.totalBookings.getBooking(bookingReference);
+      String caterName = cateringType.getName();
+      int caterCost = cateringType.getCostPerPerson();
+      Service catering = new Catering(caterName, caterCost);
+      booking.addService(catering);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + caterName + ")", bookingReference);
     } else {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
     }
