@@ -2,9 +2,9 @@ package nz.ac.auckland.se281;
 
 public abstract class Service {
 
-  String type = "";
-  String name;
-  int cost;
+  protected String type = "";
+  protected String name;
+  protected int cost;
 
   public Service() {}
 

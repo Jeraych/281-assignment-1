@@ -145,12 +145,12 @@ public class VenueList {
 
   public void bookVenue(Booking plan, String date) {
     for (Venue venue : venues) {
-      if (plan.bCode.equals(venue.code)) {
+      if (plan.getCode().equals(venue.code)) {
 
         // check for duplicates
         for (Booking i : venue.bookedDates) {
-          if (i.bDate.equals(plan.bDate)) {
-            MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venue.name, i.bDate);
+          if (i.getDate().equals(plan.getDate())) {
+            MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venue.name, i.getDate());
             return;
           }
         }
@@ -160,8 +160,8 @@ public class VenueList {
         String value = String.valueOf(min);
         if (plan.getAttendees() < min) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-              plan.bAttendees, value, venue.capacity);
-          plan.bAttendees = value;
+              plan.getStringAttendees(), value, venue.capacity);
+          plan.setAttendees(value);
         }
 
         // too many attendees
@@ -169,13 +169,13 @@ public class VenueList {
         value = String.valueOf(max);
         if (plan.getAttendees() > max) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-              plan.bAttendees, value, venue.capacity);
-          plan.bAttendees = value;
+              plan.getStringAttendees(), value, venue.capacity);
+          plan.setAttendees(value);
         }
 
         // add booking
-        plan.ref = BookingReferenceGenerator.generateBookingReference();
-        plan.dateCreated = date;
+        plan.setRef(BookingReferenceGenerator.generateBookingReference());
+        plan.setCreationDate(date);
         venue.addBooking(plan);
         totalBookings.addBookingList(plan);
         return;
@@ -183,7 +183,7 @@ public class VenueList {
     }
 
     // Can not find venue
-    MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(plan.bCode);
+    MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(plan.getCode());
     return;
   }
 

@@ -54,15 +54,15 @@ public class VenueHireSystem {
 
     // past date output
     if (year > plan.getYear()) {
-      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.getDate(), date);
       return;
     }
     if (month > plan.getMonth()) {
-      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.getDate(), date);
       return;
     }
     if (day > plan.getDay()) {
-      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.getDate(), date);
       return;
     }
 
@@ -94,7 +94,7 @@ public class VenueHireSystem {
 
     // print booking
     for (Booking i : venue.bookedDates) {
-      MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(i.ref, i.bDate);
+      MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(i.getRef(), i.getDate());
     }
   }
 
@@ -130,15 +130,15 @@ public class VenueHireSystem {
     // check if booking exists
     if (venues.totalBookings.bookingExist(bookingReference)) {
       Booking booking = venues.totalBookings.getBooking(bookingReference);
-      Venue venue = venues.getVenue(booking.bCode);
+      Venue venue = venues.getVenue(booking.getCode());
       int totalCost = 0;
       // print booking details
       MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
-          booking.ref,
-          booking.bEmail,
-          booking.dateCreated,
-          booking.bDate,
-          booking.bAttendees,
+          booking.getRef(),
+          booking.getEmail(),
+          booking.getCreationDate(),
+          booking.getDate(),
+          booking.getStringAttendees(),
           venue.name);
       MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(venue.hireFee);
       totalCost += venue.getHireFee();

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class Booking {
 
-  String bCode;
-  String bDate;
-  String bEmail;
-  String bAttendees;
-  String day;
-  String month;
-  String year;
-  String ref;
-  String dateCreated;
+  private String bCode;
+  private String bDate;
+  private String bEmail;
+  private String bAttendees;
+  private String day;
+  private String month;
+  private String year;
+  private String ref;
+  private String dateCreated;
 
   ArrayList<Service> services = new ArrayList<Service>();
 
@@ -39,6 +39,42 @@ public class Booking {
   public int getAttendees() {
     int attend = Integer.parseInt(this.bAttendees);
     return attend;
+  }
+
+  public String getStringAttendees() {
+    return bAttendees;
+  }
+
+  public void setAttendees(String attendees) {
+    this.bAttendees = attendees;
+  }
+
+  public String getEmail() {
+    return bEmail;
+  }
+
+  public String getCreationDate() {
+    return dateCreated;
+  }
+
+  public void setCreationDate(String date) {
+    this.dateCreated = date;
+  }
+
+  public String getRef() {
+    return ref;
+  }
+
+  public void setRef(String ref) {
+    this.ref = ref;
+  }
+
+  public String getDate() {
+    return bDate;
+  }
+
+  public String getCode() {
+    return bCode;
   }
 
   public int getDay() {

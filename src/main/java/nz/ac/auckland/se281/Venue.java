@@ -23,7 +23,7 @@ public class Venue {
   public void addBooking(Booking plan) {
     this.bookedDates.add(plan);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        plan.ref, this.name, plan.bDate, plan.bAttendees);
+        plan.getRef(), this.name, plan.getDate(), plan.getStringAttendees());
   }
 
   public int getCapacity() {
