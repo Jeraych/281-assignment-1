@@ -804,6 +804,24 @@ public class MainTest {
     }
 
     @Test
+    public void T3_06_01_add_music_service_booking_does_not_exist() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "27/03/2024", "client001@email.com", "230"), //
+              ADD_MUSIC,
+              "ZP4HRCZ4"));
+
+      assertContains(
+          "Music service not added: there is no booking with reference 'ZP4HRCZ4' in the"
+              + " system.");
+      assertDoesNotContain("Successfully added", true);
+    }
+
+    @Test
     public void T3_07_add_music_service_booking_exists() throws Exception {
       runCommands(
           unpack(
@@ -840,6 +858,26 @@ public class MainTest {
     }
 
     @Test
+    public void T3_08_01_add_music_service_total_printed() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "27/03/2024", "client001@email.com", "230"), //
+              ADD_MUSIC,
+              "HUD14D8O", //
+              VIEW_INVOICE,
+              "HUD14D8O"));
+
+      assertContains("Successfully added Music service to booking 'HUD14D8O'.");
+      assertContains("* Music - $500");
+      assertContains("Total Amount: $2000");
+      assertDoesNotContain("not added", true);
+    }
+
+    @Test
     public void T3_09_add_floral_service_no_bookings() throws Exception {
       runCommands(
           unpack(
@@ -852,6 +890,25 @@ public class MainTest {
 
       assertContains(
           "Floral service not added: there is no booking with reference 'HUD14D8O' in the"
+              + " system.");
+      assertDoesNotContain("Successfully added", true);
+    }
+
+    @Test
+    public void T3_09_01_add_floral_service_booking_does_not_exist() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "27/03/2024", "client001@email.com", "230"), //
+              ADD_FLORAL,
+              "ZP4HRCZ4",
+              options("Standard")));
+
+      assertContains(
+          "Floral service not added: there is no booking with reference 'ZP4HRCZ4' in the"
               + " system.");
       assertDoesNotContain("Successfully added", true);
     }
@@ -871,6 +928,26 @@ public class MainTest {
 
       assertContains("Successfully added Floral (Standard) service to booking 'HUD14D8O'.");
       assertDoesNotContain("* Catering ", true);
+      assertDoesNotContain("not added", true);
+    }
+
+    @Test
+    public void T3_10_01_add_floral_service_entry_printed() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "27/03/2024", "client001@email.com", "230"), //
+              ADD_FLORAL,
+              "HUD14D8O",
+              options("Standard"), //
+              VIEW_INVOICE,
+              "HUD14D8O"));
+
+      assertContains("Successfully added Floral (Standard) service to booking 'HUD14D8O'.");
+      assertContains("* Floral (Standard) - $550");
       assertDoesNotContain("not added", true);
     }
 

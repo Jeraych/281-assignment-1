@@ -70,10 +70,7 @@ public class VenueList {
     }
 
     // Detect number of venues in the list
-    int numberValue = 0;
-    for (Venue i : venues) {
-      numberValue++;
-    }
+    int numberValue = venues.size();
 
     // Print one venue
     if (numberValue == 1) {
