@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 public class VenueList {
 
-  private ArrayList<Venue> venueList = new ArrayList<Venue>();
+  private ArrayList<Venue> venues = new ArrayList<Venue>();
   BookingList totalBookings = new BookingList();
 
   // Add new venue to the list
-  public void addVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    
+  public void addVenue(
+      String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+
     // Venue Name cannot be empty
     if (venueName.trim().isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
@@ -17,8 +18,8 @@ public class VenueList {
     }
 
     // Venue Code must be unique
-    for (Venue i : venueList) {
-      if(i.code.equals(venueCode)) {
+    for (Venue i : venues) {
+      if (i.code.equals(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, i.name);
         return;
       }
@@ -56,7 +57,7 @@ public class VenueList {
 
     // create venue
     Venue venue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
-    this.venueList.add(venue);
+    this.venues.add(venue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venue.name, venue.code);
     return;
   }
@@ -64,59 +65,61 @@ public class VenueList {
   public void displayVenues(String today) {
 
     // Print no venue
-    if (venueList.isEmpty()) {
+    if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
     }
 
     // Detect number of venues in the list
     int n = 0;
-    for (Venue i : venueList) {
+    for (Venue i : venues) {
       n++;
     }
 
     // Print one venue
     if (n == 1) {
-      Venue venue = venueList.get(0);
+      Venue venue = venues.get(0);
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
+      MessageCli.VENUE_ENTRY.printMessage(
+          venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
       return;
     }
 
     // Print 2 - 9 venues
     if (n >= 2 && n <= 9) {
       String word = "";
-      switch(n) {
-        case 1: 
-        word = "one";
-        break;
-        case 2: 
-        word = "two";
-        break;
-        case 3: 
-        word = "three";
-        break;
-        case 4: 
-        word = "four";
+      switch (n) {
+        case 1:
+          word = "one";
+          break;
+        case 2:
+          word = "two";
+          break;
+        case 3:
+          word = "three";
+          break;
+        case 4:
+          word = "four";
         case 5:
-        word = "five";
-        break;
+          word = "five";
+          break;
         case 6:
-        word = "six";
-        break;
+          word = "six";
+          break;
         case 7:
-        word = "seven";
-        break;
+          word = "seven";
+          break;
         case 8:
-        word = "eight";
-        break;
+          word = "eight";
+          break;
         case 9:
-        word = "nine";
-        break;
+          word = "nine";
+          break;
       }
       MessageCli.NUMBER_VENUES.printMessage("are", word, "s");
-      for (Venue venue : venueList) {
-        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
+      for (Venue venue : venues) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
       }
       return;
     }
@@ -125,15 +128,16 @@ public class VenueList {
     if (n >= 10) {
       String number = String.valueOf(n);
       MessageCli.NUMBER_VENUES.printMessage("are", number, "s");
-      for (Venue venue : venueList) {
-        MessageCli.VENUE_ENTRY.printMessage(venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
+      for (Venue venue : venues) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            venue.name, venue.code, venue.capacity, venue.hireFee, venue.getNextDate(today));
       }
       return;
     }
   }
 
   public boolean venueEmpty() {
-    if(venueList.isEmpty()) {
+    if (venues.isEmpty()) {
       return true;
     } else {
       return false;
@@ -141,12 +145,12 @@ public class VenueList {
   }
 
   public void bookVenue(Booking plan, String date) {
-    
-    for (Venue venue : venueList) {
+
+    for (Venue venue : venues) {
       if (plan.bCode.equals(venue.code)) {
 
         // check for duplicates
-        for (Booking i : venue.bookedDate) {
+        for (Booking i : venue.bookedDates) {
           if (i.bDate.equals(plan.bDate)) {
             MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venue.name, i.bDate);
             return;
@@ -157,7 +161,8 @@ public class VenueList {
         int min = venue.getCapacity() / 4;
         String value = String.valueOf(min);
         if (plan.getAttendees() < min) {
-          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(plan.bAttendees, value, venue.capacity);
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              plan.bAttendees, value, venue.capacity);
           plan.bAttendees = value;
         }
 
@@ -165,7 +170,8 @@ public class VenueList {
         int max = venue.getCapacity();
         value = String.valueOf(max);
         if (plan.getAttendees() > max) {
-          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(plan.bAttendees, value, venue.capacity);
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              plan.bAttendees, value, venue.capacity);
           plan.bAttendees = value;
         }
 
@@ -181,12 +187,11 @@ public class VenueList {
     // Can not find venue
     MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(plan.bCode);
     return;
-    
   }
 
   public Venue getVenue(String code) {
     Venue error = new Venue();
-    for (Venue i : venueList) {
+    for (Venue i : venues) {
       if (i.code.equals(code)) {
         return i;
       }
@@ -196,16 +201,16 @@ public class VenueList {
 
   public boolean venueExist(String code) {
 
-    if (venueList.isEmpty()) {
+    if (venues.isEmpty()) {
       return false;
     }
 
-    for (Venue i : venueList) {
+    for (Venue i : venues) {
       if (i.code.equals(code)) {
         return true;
       }
     }
-    
+
     return false;
   }
 }

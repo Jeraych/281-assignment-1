@@ -1,4 +1,5 @@
 package nz.ac.auckland.se281;
+
 import java.util.ArrayList;
 
 public class Booking {
@@ -18,7 +19,7 @@ public class Booking {
   public Booking() {}
 
   public Booking(String[] options) {
-    
+
     String code = options[0];
     String date = options[1];
     String email = options[2];
@@ -115,5 +116,4 @@ public class Booking {
     }
     return error;
   }
-
- }
+}

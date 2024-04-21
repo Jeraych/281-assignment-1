@@ -13,8 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-  // MainTest.Task1.class,
-  // MainTest.Task2.class,
+  MainTest.Task1.class,
+  MainTest.Task2.class,
   MainTest.Task3.class,
   // MainTest.YourTests.class, // Uncomment this line to run your own tests
 })
@@ -532,18 +532,18 @@ public class MainTest {
     }
 
     @Test
-    public void T2_11_03_booking_next_available_date_after_making_over_month_bookings() throws Exception {
+    public void T2_11_03_booking_next_available_date_after_making_over_month_bookings()
+        throws Exception {
       runCommands(
           unpack(
-            CREATE_TEN_VENUES, //
-            SET_DATE,
-            "30/03/2024", //
-            MAKE_BOOKING,
-            options("GGG", "30/03/2024", "client001@email.com", "230"),
-            MAKE_BOOKING,
-            options("GGG", "31/03/2024", "client001@email.com", "230"),
-            PRINT_VENUES));
-              
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "30/03/2024", //
+              MAKE_BOOKING,
+              options("GGG", "30/03/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "31/03/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
 
       assertContains(
           "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
@@ -557,18 +557,18 @@ public class MainTest {
     }
 
     @Test
-    public void T2_11_04_booking_next_available_date_after_making_past_month_bookings() throws Exception {
+    public void T2_11_04_booking_next_available_date_after_making_past_month_bookings()
+        throws Exception {
       runCommands(
           unpack(
-            CREATE_TEN_VENUES, //
-            SET_DATE,
-            "30/03/2024", //
-            MAKE_BOOKING,
-            options("GGG", "29/03/2024", "client001@email.com", "230"),
-            MAKE_BOOKING,
-            options("GGG", "28/03/2024", "client001@email.com", "230"),
-            PRINT_VENUES));
-              
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "30/03/2024", //
+              MAKE_BOOKING,
+              options("GGG", "29/03/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "28/03/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
 
       assertContains(
           "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
@@ -585,24 +585,21 @@ public class MainTest {
     public void T2_11_05_booking_next_available_date_after_making_changing_date() throws Exception {
       runCommands(
           unpack(
-            CREATE_TEN_VENUES, //
-            SET_DATE,
-            "01/02/2024", //
-            MAKE_BOOKING,
-            options("GGG", "01/02/2024", "client001@email.com", "230"),
-            PRINT_VENUES,
-            SET_DATE,
-            "30/03/2024", //
-            MAKE_BOOKING,
-            options("GGG", "30/03/2024", "client001@email.com", "230"),
-            PRINT_VENUES
-            ));
-              
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "01/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "01/02/2024", "client001@email.com", "230"),
+              PRINT_VENUES,
+              SET_DATE,
+              "30/03/2024", //
+              MAKE_BOOKING,
+              options("GGG", "30/03/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
 
       assertContains(
-        "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
-            + " 31/03/2024");
-
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 31/03/2024");
     }
 
     @Test

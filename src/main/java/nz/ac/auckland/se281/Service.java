@@ -14,7 +14,7 @@ public abstract class Service {
 
   public abstract void bookService(BookingList list, String ref);
 
-  public boolean validBooking (BookingList list, String ref) {
+  public boolean validBooking(BookingList list, String ref) {
     if (list.bookingExist(ref)) {
       return true;
     } else {

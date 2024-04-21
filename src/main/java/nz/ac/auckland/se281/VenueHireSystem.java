@@ -1,7 +1,4 @@
 package nz.ac.auckland.se281;
-import java.sql.Date;
-
-import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
@@ -21,13 +18,12 @@ public class VenueHireSystem {
   public void printVenues() {
     // TODO implement this method
     venues.displayVenues(date);
-
   }
 
-  public void createVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+  public void createVenue(
+      String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // TODO implement this method
     venues.addVenue(venueName, venueCode, capacityInput, hireFeeInput);
-        
   }
 
   public void setSystemDate(String dateInput) {
@@ -100,12 +96,12 @@ public class VenueHireSystem {
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(i.name);
 
     // not booked
-    if (i.bookedDate.isEmpty()) {
+    if (i.bookedDates.isEmpty()) {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(i.name);
       return;
     }
 
-    for (Booking j : i.bookedDate) {
+    for (Booking j : i.bookedDates) {
       MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(j.ref, j.bDate);
     }
   }
@@ -116,18 +112,20 @@ public class VenueHireSystem {
     int caterCost = cateringType.getCostPerPerson();
     Catering catering = new Catering(caterName, caterCost);
 
-    if(catering.validBooking(venues.totalBookings, bookingReference)) {
+    if (catering.validBooking(venues.totalBookings, bookingReference)) {
       catering.bookService(venues.totalBookings, bookingReference);
-    };
+    }
+    ;
   }
 
   public void addServiceMusic(String bookingReference) {
     // TODO implement this method
     Music music = new Music();
 
-    if(music.validBooking(venues.totalBookings, bookingReference)) {
+    if (music.validBooking(venues.totalBookings, bookingReference)) {
       music.bookService(venues.totalBookings, bookingReference);
-    };
+    }
+    ;
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
@@ -136,9 +134,10 @@ public class VenueHireSystem {
     int floralCost = floralType.getCost();
     Floral floral = new Floral(floralName, floralCost);
 
-    if(floral.validBooking(venues.totalBookings, bookingReference)) {
+    if (floral.validBooking(venues.totalBookings, bookingReference)) {
       floral.bookService(venues.totalBookings, bookingReference);
-    };
+    }
+    ;
   }
 
   public void viewInvoice(String bookingReference) {
@@ -147,7 +146,13 @@ public class VenueHireSystem {
       Booking booking = venues.totalBookings.getBooking(bookingReference);
       Venue venue = venues.getVenue(booking.bCode);
       int totalCost = 0;
-      MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(booking.ref, booking.bEmail, booking.dateCreated, booking.bDate, booking.bAttendees, venue.name);
+      MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+          booking.ref,
+          booking.bEmail,
+          booking.dateCreated,
+          booking.bDate,
+          booking.bAttendees,
+          venue.name);
       MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(venue.hireFee);
       totalCost += venue.getHireFee();
 
@@ -155,7 +160,8 @@ public class VenueHireSystem {
       if (booking.caterExist()) {
         Service cater = booking.getCater();
         int caterCost = cater.cost * booking.getAttendees();
-        MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(cater.name, Integer.toString(caterCost));
+        MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+            cater.name, Integer.toString(caterCost));
         totalCost += caterCost;
       }
 
@@ -171,13 +177,13 @@ public class VenueHireSystem {
       if (booking.floralExist()) {
         Service floral = booking.getFloral();
         int floralCost = floral.cost;
-        MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(floral.name, Integer.toString(floralCost));
+        MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+            floral.name, Integer.toString(floralCost));
         totalCost += floralCost;
       }
       MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
     } else {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
     }
-    
   }
 }
