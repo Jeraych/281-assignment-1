@@ -2,13 +2,17 @@ package nz.ac.auckland.se281;
 
 public class Catering extends Service {
 
-  String name;
-  int cost;
-
   public Catering() {}
 
   public Catering(String name, int cost) {
+    super(cost);
     this.name = name;
-    this.cost = cost;
+    this.type = "Catering";
+  }
+
+  public void bookService (BookingList list, String ref) {
+    Booking booking = list.getBooking(ref);
+    booking.addService(this);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(this.type + " (" + this.name + ")", ref);
   }
 }

@@ -11,6 +11,7 @@ public class Booking {
   String month;
   String year;
   String ref;
+  String dateCreated;
 
   ArrayList<Service> services = new ArrayList<Service>();
 
@@ -56,6 +57,63 @@ public class Booking {
 
   public void addService(Service service) {
     services.add(service);
+  }
+
+  public boolean caterExist() {
+    for (Service i : services) {
+      if (i.type.equals("Catering")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public Service getCater() {
+    Service error = new Catering();
+    for (Service i : services) {
+      if (i.type.equals("Catering")) {
+        return i;
+      }
+    }
+    return error;
+  }
+
+  public boolean musicExist() {
+    for (Service i : services) {
+      if (i.type.equals("Music")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public Service getMusic() {
+    Service error = new Music();
+    for (Service i : services) {
+      if (i.type.equals("Music")) {
+        return i;
+      }
+    }
+    return error;
+  }
+
+  public boolean floralExist() {
+    for (Service i : services) {
+      if (i.type.equals("Floral")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public Service getFloral() {
+    Service error = new Floral();
+    for (Service i : services) {
+      if (i.type.equals("Floral")) {
+        return i;
+      }
+    }
+    return error;
   }
 
  }

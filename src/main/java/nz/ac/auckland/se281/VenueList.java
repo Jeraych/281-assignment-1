@@ -140,7 +140,7 @@ public class VenueList {
     }
   }
 
-  public void bookVenue(Booking plan) {
+  public void bookVenue(Booking plan, String date) {
     
     for (Venue venue : venueList) {
       if (plan.bCode.equals(venue.code)) {
@@ -171,6 +171,7 @@ public class VenueList {
 
         // add booking
         plan.ref = BookingReferenceGenerator.generateBookingReference();
+        plan.dateCreated = date;
         venue.addBooking(plan);
         totalBookings.addBookingList(plan);
         return;

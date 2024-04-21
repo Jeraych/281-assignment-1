@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
 import java.sql.Date;
 
+import org.apache.commons.codec.digest.MessageDigestAlgorithms;
+
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
@@ -81,7 +83,7 @@ public class VenueHireSystem {
     }
 
     // make booking
-    venues.bookVenue(plan);
+    venues.bookVenue(plan, date);
   }
 
   public void printBookings(String venueCode) {
@@ -110,28 +112,72 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     // TODO implement this method
+    String caterName = cateringType.getName();
+    int caterCost = cateringType.getCostPerPerson();
+    Catering catering = new Catering(caterName, caterCost);
 
-    if (venues.totalBookings.bookingExist(bookingReference)) {
-      Booking booking = venues.totalBookings.getBooking(bookingReference);
-      String caterName = cateringType.getName();
-      int caterCost = cateringType.getCostPerPerson();
-      Service catering = new Catering(caterName, caterCost);
-      booking.addService(catering);
-      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Catering (" + caterName + ")", bookingReference);
-    } else {
-      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
-    }
+    if(catering.validBooking(venues.totalBookings, bookingReference)) {
+      catering.bookService(venues.totalBookings, bookingReference);
+    };
   }
 
   public void addServiceMusic(String bookingReference) {
     // TODO implement this method
+    Music music = new Music();
+
+    if(music.validBooking(venues.totalBookings, bookingReference)) {
+      music.bookService(venues.totalBookings, bookingReference);
+    };
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     // TODO implement this method
+    String floralName = floralType.getName();
+    int floralCost = floralType.getCost();
+    Floral floral = new Floral(floralName, floralCost);
+
+    if(floral.validBooking(venues.totalBookings, bookingReference)) {
+      floral.bookService(venues.totalBookings, bookingReference);
+    };
   }
 
   public void viewInvoice(String bookingReference) {
     // TODO implement this method
+    if (venues.totalBookings.bookingExist(bookingReference)) {
+      Booking booking = venues.totalBookings.getBooking(bookingReference);
+      Venue venue = venues.getVenue(booking.bCode);
+      int totalCost = 0;
+      MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(booking.ref, booking.bEmail, booking.dateCreated, booking.bDate, booking.bAttendees, venue.name);
+      MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(venue.hireFee);
+      totalCost += venue.getHireFee();
+
+      // Check if catering service is booked
+      if (booking.caterExist()) {
+        Service cater = booking.getCater();
+        int caterCost = cater.cost * booking.getAttendees();
+        MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(cater.name, Integer.toString(caterCost));
+        totalCost += caterCost;
+      }
+
+      // Check if music service is booked
+      if (booking.musicExist()) {
+        Service music = booking.getMusic();
+        int musicCost = music.cost;
+        MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(Integer.toString(musicCost));
+        totalCost += musicCost;
+      }
+
+      // Check if floral service is booked
+      if (booking.floralExist()) {
+        Service floral = booking.getFloral();
+        int floralCost = floral.cost;
+        MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(floral.name, Integer.toString(floralCost));
+        totalCost += floralCost;
+      }
+      MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
+    } else {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+    }
+    
   }
 }
