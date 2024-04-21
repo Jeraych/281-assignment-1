@@ -6,7 +6,6 @@ public class Music extends Service {
     this.cost = 500;
     this.type = "Music";
   }
-  ;
 
   public void bookService(BookingList list, String ref) {
     Booking booking = list.getBooking(ref);

@@ -7,7 +7,6 @@ public class VenueList {
   private ArrayList<Venue> venues = new ArrayList<Venue>();
   BookingList totalBookings = new BookingList();
 
-  // Add new venue to the list
   public void addVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
 
@@ -71,13 +70,13 @@ public class VenueList {
     }
 
     // Detect number of venues in the list
-    int n = 0;
+    int numberValue = 0;
     for (Venue i : venues) {
-      n++;
+      numberValue++;
     }
 
     // Print one venue
-    if (n == 1) {
+    if (numberValue == 1) {
       Venue venue = venues.get(0);
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
       MessageCli.VENUE_ENTRY.printMessage(
@@ -86,9 +85,9 @@ public class VenueList {
     }
 
     // Print 2 - 9 venues
-    if (n >= 2 && n <= 9) {
+    if (numberValue >= 2 && numberValue <= 9) {
       String word = "";
-      switch (n) {
+      switch (numberValue) {
         case 1:
           word = "one";
           break;
@@ -125,8 +124,8 @@ public class VenueList {
     }
 
     // Print 10+ venues
-    if (n >= 10) {
-      String number = String.valueOf(n);
+    if (numberValue >= 10) {
+      String number = String.valueOf(numberValue);
       MessageCli.NUMBER_VENUES.printMessage("are", number, "s");
       for (Venue venue : venues) {
         MessageCli.VENUE_ENTRY.printMessage(
@@ -145,7 +144,6 @@ public class VenueList {
   }
 
   public void bookVenue(Booking plan, String date) {
-
     for (Venue venue : venues) {
       if (plan.bCode.equals(venue.code)) {
 
@@ -200,7 +198,7 @@ public class VenueList {
   }
 
   public boolean venueExist(String code) {
-
+    // no such venue if there are no venues at all
     if (venues.isEmpty()) {
       return false;
     }
@@ -210,7 +208,6 @@ public class VenueList {
         return true;
       }
     }
-
     return false;
   }
 }

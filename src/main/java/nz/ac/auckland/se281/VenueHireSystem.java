@@ -16,29 +16,26 @@ public class VenueHireSystem {
   public VenueHireSystem() {}
 
   public void printVenues() {
-    // TODO implement this method
     venues.displayVenues(date);
   }
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
     venues.addVenue(venueName, venueCode, capacityInput, hireFeeInput);
   }
 
   public void setSystemDate(String dateInput) {
-    // TODO implement this method
     date = dateInput;
     MessageCli.DATE_SET.printMessage(date);
     dateParts = date.split("/");
 
+    // split date into integer for better access
     day = Integer.parseInt(dateParts[0]);
     month = Integer.parseInt(dateParts[1]);
     year = Integer.parseInt(dateParts[2]);
   }
 
   public void printSystemDate() {
-    // TODO implement this method
     if (date.trim().isEmpty()) {
       MessageCli.CURRENT_DATE.printMessage("not set");
     } else {
@@ -47,18 +44,15 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
-    // TODO implement this method
-
-    // no system date
+    // no system date output
     if (date.trim().isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }
 
-    // using booking class
     Booking plan = new Booking(options);
 
-    // past date
+    // past date output
     if (year > plan.getYear()) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(plan.bDate, date);
       return;
@@ -72,42 +66,39 @@ public class VenueHireSystem {
       return;
     }
 
-    // no venue
+    // no venue output
     if (venues.venueEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
 
-    // make booking
+    // finally make booking
     venues.bookVenue(plan, date);
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
-
-    // no venue exist
+    // no venue exist output
     if (!venues.venueExist(venueCode)) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
     }
 
-    // print booking
-    Venue i = venues.getVenue(venueCode);
-    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(i.name);
+    Venue venue = venues.getVenue(venueCode);
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.name);
 
-    // not booked
-    if (i.bookedDates.isEmpty()) {
-      MessageCli.PRINT_BOOKINGS_NONE.printMessage(i.name);
+    // not booked output
+    if (venue.bookedDates.isEmpty()) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venue.name);
       return;
     }
 
-    for (Booking j : i.bookedDates) {
-      MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(j.ref, j.bDate);
+    // print booking
+    for (Booking i : venue.bookedDates) {
+      MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(i.ref, i.bDate);
     }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
     String caterName = cateringType.getName();
     int caterCost = cateringType.getCostPerPerson();
     Catering catering = new Catering(caterName, caterCost);
@@ -115,21 +106,17 @@ public class VenueHireSystem {
     if (catering.validBooking(venues.totalBookings, bookingReference)) {
       catering.bookService(venues.totalBookings, bookingReference);
     }
-    ;
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
     Music music = new Music();
 
     if (music.validBooking(venues.totalBookings, bookingReference)) {
       music.bookService(venues.totalBookings, bookingReference);
     }
-    ;
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
     String floralName = floralType.getName();
     int floralCost = floralType.getCost();
     Floral floral = new Floral(floralName, floralCost);
@@ -137,15 +124,15 @@ public class VenueHireSystem {
     if (floral.validBooking(venues.totalBookings, bookingReference)) {
       floral.bookService(venues.totalBookings, bookingReference);
     }
-    ;
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    // check if booking exists
     if (venues.totalBookings.bookingExist(bookingReference)) {
       Booking booking = venues.totalBookings.getBooking(bookingReference);
       Venue venue = venues.getVenue(booking.bCode);
       int totalCost = 0;
+      // print booking details
       MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
           booking.ref,
           booking.bEmail,
@@ -181,6 +168,7 @@ public class VenueHireSystem {
             floral.name, Integer.toString(floralCost));
         totalCost += floralCost;
       }
+      // print total cost of hiring venue
       MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
     } else {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);

@@ -14,7 +14,6 @@ public class Venue {
   public Venue() {}
 
   public Venue(String venueName, String venueCode, String venueCapacity, String venueHireFee) {
-
     this.name = venueName;
     this.code = venueCode;
     this.capacity = venueCapacity;
@@ -38,7 +37,6 @@ public class Venue {
   }
 
   public String getNextDate(String today) {
-
     // task 1 fixes
     if (today.trim().isEmpty()) {
       return "";
@@ -55,6 +53,7 @@ public class Venue {
     int month = Integer.parseInt(dateParts[1]);
     int year = Integer.parseInt(dateParts[2]);
 
+    // search for exact same date, if there is, look if the next one is occupied too
     while (!occupiedDate) {
       occupiedDate = true;
       for (Booking i : bookedDates) {
@@ -72,6 +71,7 @@ public class Venue {
 
     String sDay;
     String sMonth;
+    // turn to respective string with 1 digit
     if (day <= 9) {
       sDay = "0" + Integer.toString(day);
     } else {
